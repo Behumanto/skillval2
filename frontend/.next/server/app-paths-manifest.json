@@ -1,9 +1,0 @@
-{
-  "/_not-found/page": "app/_not-found/page.js",
-  "/api/live-assessment/azure-vision/route": "app/api/live-assessment/azure-vision/route.js",
-  "/dashboard/assessor/live/page": "app/dashboard/assessor/live/page.js",
-  "/dashboard/jeugdzorg/pedagogiek/page": "app/dashboard/jeugdzorg/pedagogiek/page.js",
-  "/dashboard/assessor/page": "app/dashboard/assessor/page.js",
-  "/dashboard/assessor/vision/page": "app/dashboard/assessor/vision/page.js",
-  "/dashboard/competencies/page": "app/dashboard/competencies/page.js"
-}

@@ -32,9 +32,11 @@ export class AzureOpenAIClient {
       this.deploymentName = 'gpt-4o'; // Use regular OpenAI model name
     } else {
       console.log("Using Azure OpenAI configuration");
+      // Normalize endpoint - remove trailing slash if present
+      const normalizedEndpoint = endpoint.replace(/\/$/, '');
       this.client = new OpenAI({
         apiKey: apiKey,
-        baseURL: `${endpoint}/openai/deployments/${this.deploymentName}`,
+        baseURL: `${normalizedEndpoint}/openai/deployments/${this.deploymentName}`,
         defaultQuery: { 'api-version': apiVersion },
         defaultHeaders: {
           'api-key': apiKey,

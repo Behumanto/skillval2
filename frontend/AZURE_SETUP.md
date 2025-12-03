@@ -77,15 +77,16 @@ az cognitiveservices account create \
 
 ### 2. Deploy Vision Model
 ```bash
-# Deploy GPT-4o Vision model
+# Deploy GPT-4o Vision model (GlobalStandard SKU for West Europe)
 az cognitiveservices account deployment create \
   --resource-group skillval-rg \
   --name skillval-openai \
   --deployment-name gpt-4o-vision \
   --model-name gpt-4o \
-  --model-version 2024-08-06 \
+  --model-version 2024-11-20 \
   --model-format OpenAI \
-  --scale-settings-capacity 10
+  --sku-capacity 10 \
+  --sku-name GlobalStandard
 ```
 
 ### 3. Environment Variables
@@ -93,7 +94,8 @@ Voeg toe aan `.env.local`:
 
 ```env
 # Azure OpenAI Configuration
-AZURE_OPENAI_ENDPOINT=https://skillval-openai.openai.azure.com/
+# Get endpoint from: az cognitiveservices account show --resource-group skillval-rg --name skillval-openai --query "properties.endpoint" -o tsv
+AZURE_OPENAI_ENDPOINT=https://westeurope.api.cognitive.microsoft.com/
 AZURE_OPENAI_API_KEY=your-azure-openai-key-here
 AZURE_OPENAI_API_VERSION=2024-02-01
 AZURE_OPENAI_DEPLOYMENT_NAME=gpt-4o-vision

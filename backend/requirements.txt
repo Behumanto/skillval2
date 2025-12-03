@@ -1,0 +1,38 @@
+# --- Core web framework ---
+fastapi==0.111.0
+uvicorn[standard]==0.30.0
+
+# --- Environment & settings ---
+python-dotenv==1.0.1
+pydantic==2.9.2
+pydantic-settings==2.3.1
+
+# --- Database (MongoDB async) ---
+motor==3.6.0
+pymongo==4.9.1
+
+# --- Authentication & security ---
+passlib[bcrypt]==1.7.4
+PyJWT==2.8.0
+python-multipart==0.0.9
+
+# --- Networking & async utils ---
+httpx==0.27.0
+requests==2.32.3
+websockets==12.0
+aiofiles==23.2.1
+
+# --- AI integrations ---
+openai==1.51.2       # voor rapportgeneratie, LLM-analyse
+tiktoken==0.8.0      # token handling voor OpenAI
+deepgram-sdk==3.2.3  # STT / TTS integratie
+
+# --- Utilities & logging ---
+loguru==0.7.2
+rich==13.9.2
+tenacity==9.0.0      # retry logic bij API-calls
+
+# --- Testing & linting (optioneel, dev only) ---
+pytest==8.3.3
+httpx==0.27.0
+pytest-asyncio==0.23.7

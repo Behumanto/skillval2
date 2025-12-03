@@ -1,0 +1,562 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --skillval-color-ocean: #0c4767;
+  --skillval-color-warm: #fa7921;
+  --layout-backdrop-bg: linear-gradient(135deg, #0c4767 0%, #566e3d 48%, #fa7921 100%);
+  --layout-backdrop-foreground: #ffffff;
+  --layout-backdrop-padding: clamp(1.5rem, 2vw + 1rem, 2.5rem);
+  --layout-card-bg: rgba(255, 255, 255, 0.97);
+  --layout-card-border: rgba(12, 71, 103, 0.12);
+  --layout-card-shadow: 0 55px 65px -40px rgba(12, 71, 103, 0.45);
+  --layout-footer-text: rgba(255, 255, 255, 0.7);
+  --surface-card-bg: rgba(255, 255, 255, 0.97);
+  --surface-card-border: rgba(12, 71, 103, 0.12);
+  --surface-card-shadow: 0 25px 45px -30px rgba(12, 71, 103, 0.22);
+  --surface-card-hover-shadow: 0 32px 60px -40px rgba(12, 71, 103, 0.35);
+  --surface-text-primary: #1f1a17;
+  --surface-text-secondary: #4b5563;
+  --pill-bg: rgba(12, 71, 103, 0.12);
+  --pill-text: #0c4767;
+  --progress-track: rgba(12, 71, 103, 0.12);
+  --progress-fill: linear-gradient(90deg, var(--skillval-color-ocean), var(--skillval-color-warm));
+  --sidebar-bg: rgba(255, 255, 255, 0.96);
+  --sidebar-border: rgba(12, 71, 103, 0.12);
+  --sidebar-shadow: 0 24px 40px -24px rgba(12, 71, 103, 0.25);
+  --sidebar-text: #1f1a17;
+  --sidebar-hover-bg: rgba(250, 121, 33, 0.12);
+  --sidebar-active-bg: rgba(250, 121, 33, 0.15);
+  --sidebar-active-border: rgba(250, 121, 33, 0.85);
+  --sidebar-active-text: #1f1a17;
+  --sidebar-active-shadow: 0 22px 42px -26px rgba(250, 121, 33, 0.35);
+  --chat-hero-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.82));
+  --chat-hero-overlay: radial-gradient(circle at 20% 20%, rgba(12, 71, 103, 0.16), transparent 55%), radial-gradient(circle at 80% 0%, rgba(250, 121, 33, 0.18), transparent 55%);
+  --glass-overlay: radial-gradient(circle at 10% 20%, rgba(12, 71, 103, 0.12), transparent 55%), radial-gradient(circle at 90% 10%, rgba(250, 121, 33, 0.14), transparent 55%);
+  --chat-bubble-surface: rgba(255, 255, 255, 0.98);
+  --chat-bubble-border: rgba(12, 71, 103, 0.12);
+  --chat-bubble-shadow: 0 18px 35px -28px rgba(12, 71, 103, 0.3);
+  --chat-bubble-assistant: rgba(12, 71, 103, 0.08);
+  --chat-bubble-assistant-border: rgba(12, 71, 103, 0.18);
+}
+
+@keyframes design-test-gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--layout-backdrop-bg);
+  color: var(--surface-text-primary);
+  transition: background 0.6s ease, color 0.6s ease;
+}
+
+.global-backdrop {
+  min-height: 100vh;
+  width: 100%;
+  padding: var(--layout-backdrop-padding);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--layout-backdrop-bg);
+  color: var(--layout-backdrop-foreground);
+  position: relative;
+  overflow: visible;
+}
+
+.global-content {
+  width: 100%;
+  max-width: 100%;
+  min-height: calc(100vh - 6rem);
+  border-radius: 2.5rem;
+  background: var(--layout-card-bg);
+  border: 1px solid var(--layout-card-border);
+  box-shadow: var(--layout-card-shadow);
+  color: var(--surface-text-primary);
+  overflow: visible;
+  transition: background 0.6s ease, border 0.6s ease, box-shadow 0.6s ease, color 0.6s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.global-footer {
+  margin-top: 2rem;
+  text-align: center;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--layout-footer-text);
+  transition: color 0.6s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.glass-card {
+  @apply rounded-3xl p-6 shadow-xl backdrop-blur-md;
+  background: var(--surface-card-bg);
+  border: 1px solid var(--surface-card-border);
+  box-shadow: var(--surface-card-shadow);
+  color: var(--surface-text-primary);
+  position: relative;
+  overflow: hidden;
+  transition: background 0.4s ease, border 0.4s ease, color 0.4s ease, box-shadow 0.4s ease;
+}
+
+.glass-card:hover {
+  box-shadow: var(--surface-card-hover-shadow);
+  transform: translateY(-4px);
+}
+
+.glass-card h1,
+.glass-card h2,
+.glass-card h3 {
+  color: var(--surface-text-primary);
+}
+
+.glass-card p,
+.glass-card span,
+.glass-card label {
+  color: var(--surface-text-secondary);
+}
+
+.progress-bar {
+  @apply h-2 w-full overflow-hidden rounded-full;
+  background: var(--progress-track);
+  transition: background 0.4s ease;
+}
+
+.progress-bar-fill {
+  @apply h-full rounded-full;
+  background-image: var(--progress-fill);
+  transition: background 0.4s ease;
+}
+
+.status-pill {
+  @apply inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold;
+  background: var(--pill-bg);
+  color: var(--pill-text);
+  transition: background 0.4s ease, color 0.4s ease;
+}
+
+.card-section-title {
+  @apply text-sm uppercase tracking-wide;
+  color: var(--surface-text-secondary);
+  transition: color 0.4s ease;
+}
+
+.sidebar {
+  background: var(--sidebar-bg) !important;
+  border-right: 1px solid var(--sidebar-border) !important;
+  box-shadow: var(--sidebar-shadow) !important;
+  color: var(--sidebar-text);
+  backdrop-filter: blur(12px);
+}
+
+.sidebar nav a {
+  color: var(--sidebar-text);
+  transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.sidebar nav a svg {
+  color: inherit;
+}
+
+.sidebar nav a:hover {
+  background: var(--sidebar-hover-bg) !important;
+  color: var(--sidebar-active-text);
+}
+
+.sidebar nav a.bg-skillval-cream {
+  background: var(--sidebar-active-bg) !important;
+  border-left-color: var(--sidebar-active-border) !important;
+  color: var(--sidebar-active-text) !important;
+  box-shadow: var(--sidebar-active-shadow) !important;
+}
+
+.sidebar .bg-white,
+.sidebar .bg-gray-50 {
+  background: var(--sidebar-bg) !important;
+  color: var(--sidebar-text) !important;
+}
+
+.sidebar__header,
+.sidebar__user {
+  background: rgba(255, 255, 255, 0.88);
+  border-color: var(--sidebar-border);
+}
+
+.global-content,
+.glass-card,
+.sidebar,
+.chat-bubble {
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease, border 0.3s ease, color 0.3s ease;
+}
+
+.chat-bubble:hover {
+  transform: translateY(-3px);
+}
+
+@keyframes card-glimmer {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+body.theme-samenai {
+  font-family: "Lexend", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --skillval-color-ocean: #2da3b5;
+  --skillval-color-warm: #d63384;
+  --layout-backdrop-bg: linear-gradient(135deg, #0b2c38 0%, #174e5e 60%, #2da3b5 100%);
+  --layout-backdrop-foreground: #ffffff;
+  --layout-card-bg: rgba(11, 44, 56, 0.85);
+  --layout-card-border: rgba(45, 163, 181, 0.35);
+  --layout-card-shadow: 0 70px 110px -60px rgba(0, 0, 0, 0.72);
+  --layout-footer-text: rgba(163, 177, 182, 0.6);
+  --surface-card-bg: rgba(23, 78, 94, 0.62);
+  --surface-card-border: rgba(45, 163, 181, 0.35);
+  --surface-card-shadow: 0 32px 60px -35px rgba(0, 0, 0, 0.7);
+  --surface-card-hover-shadow: 0 40px 90px -45px rgba(0, 0, 0, 0.75);
+  --surface-text-primary: #ffffff;
+  --surface-text-secondary: #a3b1b6;
+  --pill-bg: rgba(45, 163, 181, 0.18);
+  --pill-text: #2da3b5;
+  --progress-track: rgba(255, 255, 255, 0.22);
+  --progress-fill: linear-gradient(90deg, #2da3b5, #d63384);
+  --sidebar-bg: rgba(11, 44, 56, 0.88);
+  --sidebar-border: rgba(45, 163, 181, 0.32);
+  --sidebar-shadow: 0 40px 80px -40px rgba(0, 0, 0, 0.72);
+  --sidebar-text: #a3b1b6;
+  --sidebar-hover-bg: rgba(45, 163, 181, 0.2);
+  --sidebar-active-bg: linear-gradient(135deg, rgba(45, 163, 181, 0.32), rgba(214, 51, 132, 0.32));
+  --sidebar-active-border: rgba(214, 51, 132, 0.82);
+  --sidebar-active-text: #ffffff;
+  --sidebar-active-shadow: 0 20px 45px -25px rgba(214, 51, 132, 0.6);
+  --chat-hero-bg: linear-gradient(135deg, rgba(11, 44, 56, 0.92), rgba(23, 78, 94, 0.78));
+  --chat-hero-overlay: radial-gradient(circle at 10% 20%, rgba(45, 163, 181, 0.28), transparent 55%), radial-gradient(circle at 90% 10%, rgba(214, 51, 132, 0.28), transparent 55%);
+  --glass-overlay: radial-gradient(circle at 10% 20%, rgba(45, 163, 181, 0.25), transparent 60%), radial-gradient(circle at 90% 5%, rgba(214, 51, 132, 0.28), transparent 60%);
+  --chat-bubble-surface: rgba(23, 78, 94, 0.58);
+  --chat-bubble-border: rgba(45, 163, 181, 0.28);
+  --chat-bubble-shadow: 0 32px 60px -35px rgba(0, 0, 0, 0.7);
+  --chat-bubble-assistant: linear-gradient(135deg, rgba(45, 163, 181, 0.3), rgba(214, 51, 132, 0.26));
+  --chat-bubble-assistant-border: rgba(214, 51, 132, 0.35);
+}
+
+body.theme-samenai .global-backdrop {
+  background-size: 400% 400%;
+  animation: design-test-gradient-shift 16s ease infinite;
+}
+
+body.theme-samenai .global-backdrop::before {
+  content: "";
+  position: absolute;
+  inset: -40%;
+  background-size: 140px 140px;
+  background-image:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.07) 1px, transparent 1px),
+    linear-gradient(0deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  opacity: 0.15;
+  transform: rotate(1deg);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.glass-card::after {
+  content: "";
+  position: absolute;
+  inset: -35%;
+  background: var(--glass-overlay);
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  pointer-events: none;
+}
+
+.glass-card:hover::after {
+  opacity: 1;
+}
+
+body.theme-samenai .glass-card {
+  animation: card-glimmer 14s ease-in-out infinite alternate;
+}
+
+.chat-hero {
+  background: var(--chat-hero-bg);
+  border: 1px solid var(--surface-card-border);
+  box-shadow: var(--surface-card-shadow);
+  position: relative;
+  overflow: hidden;
+}
+
+.chat-hero::after {
+  content: "";
+  position: absolute;
+  inset: -35%;
+  background: var(--chat-hero-overlay);
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  pointer-events: none;
+}
+
+.chat-hero:hover::after {
+  opacity: 1;
+}
+
+.chat-bubble {
+  background: var(--chat-bubble-surface);
+  border: 1px solid var(--chat-bubble-border);
+  box-shadow: var(--chat-bubble-shadow);
+  color: var(--surface-text-primary);
+}
+
+.chat-bubble.assistant {
+  background: var(--chat-bubble-assistant) !important;
+  border-color: var(--chat-bubble-assistant-border) !important;
+  color: var(--surface-text-primary);
+}
+
+.chat-bubble:hover {
+  transform: translateY(-4px);
+}
+
+.chat-theme-samenai .chat-bubble:hover {
+  transform: translateY(-6px);
+}
+
+.sidebar__header,
+.sidebar__user {
+  transition: background 0.4s ease, border 0.4s ease, color 0.4s ease;
+}
+
+body.theme-samenai .sidebar__header,
+body.theme-samenai .sidebar__user {
+  background: transparent;
+}
+
+body.theme-samenai .text-skillval-warm {
+  color: #d63384 !important;
+}
+
+body.theme-samenai .text-skillval-bright {
+  color: #2da3b5 !important;
+}
+
+body.theme-samenai .bg-skillval-warm {
+  background-color: #d63384 !important;
+  color: #ffffff;
+}
+
+body.theme-samenai .hover\:bg-skillval-warm:hover {
+  background-color: #bd286f !important;
+}
+
+body.theme-samenai .bg-skillval-bright {
+  background-color: #2da3b5 !important;
+  color: #ffffff;
+}
+
+body.theme-samenai .hover\:bg-skillval-bright:hover {
+  background-color: #23899b !important;
+}
+
+body.theme-samenai .border-skillval-warm {
+  border-color: rgba(214, 51, 132, 0.7) !important;
+}
+
+/* Legacy utility overrides so futuristisch thema volgt het cyan/magenta palet */
+body.theme-samenai .bg-green-50,
+body.theme-samenai .bg-emerald-50 {
+  background-color: rgba(45, 163, 181, 0.12) !important;
+}
+
+body.theme-samenai .border-green-200,
+body.theme-samenai .border-emerald-200,
+body.theme-samenai .border-green-500 {
+  border-color: rgba(45, 163, 181, 0.35) !important;
+}
+
+body.theme-samenai .bg-green-100 {
+  background-color: rgba(45, 163, 181, 0.18) !important;
+  color: #A4E5EE !important;
+}
+
+body.theme-samenai .bg-green-200 {
+  background-color: rgba(45, 163, 181, 0.25) !important;
+  color: #73d8e8 !important;
+}
+
+body.theme-samenai .bg-green-500,
+body.theme-samenai .from-green-500,
+body.theme-samenai .to-green-600,
+body.theme-samenai .hover\:from-green-600:hover,
+body.theme-samenai .hover\:to-green-700:hover {
+  background-color: #2DA3B5 !important;
+  color: #ffffff !important;
+}
+
+body.theme-samenai .text-green-900 {
+  color: #C7F1F7 !important;
+}
+
+body.theme-samenai .text-green-700 {
+  color: #9EE4EE !important;
+}
+
+body.theme-samenai .text-green-600 {
+  color: #6FE1F2 !important;
+}
+
+body.theme-samenai .text-green-800 {
+  color: #A4E5EE !important;
+}
+
+body.theme-samenai .bg-amber-500,
+body.theme-samenai .text-amber-600,
+body.theme-samenai .bg-amber-100,
+body.theme-samenai .border-amber-300 {
+  background-color: #D63384 !important;
+  color: #ffffff !important;
+  border-color: rgba(214, 51, 132, 0.45) !important;
+}
+
+body.theme-samenai .bg-red-50 {
+  background-color: rgba(214, 51, 132, 0.12) !important;
+}
+
+body.theme-samenai .border-red-200 {
+  border-color: rgba(214, 51, 132, 0.35) !important;
+}
+
+body.theme-samenai .bg-red-100 {
+  background-color: rgba(214, 51, 132, 0.18) !important;
+  color: #F4B0D2 !important;
+}
+
+body.theme-samenai .text-red-700,
+body.theme-samenai .text-red-600,
+body.theme-samenai .text-red-800,
+body.theme-samenai .text-red-900 {
+  color: #F7B6D5 !important;
+}
+
+body.theme-samenai .bg-red-500 {
+  background-color: #D63384 !important;
+}
+
+body.theme-samenai .bg-blue-100,
+body.theme-samenai .text-blue-600 {
+  background-color: rgba(45, 163, 181, 0.18) !important;
+  color: #9ADBE6 !important;
+}
+
+body.theme-samenai .text-blue-700 {
+  color: #73d8e8 !important;
+}
+
+body.theme-samenai .border-blue-300 {
+  border-color: rgba(45, 163, 181, 0.35) !important;
+}
+
+body.theme-samenai .bg-purple-100,
+body.theme-samenai .text-purple-600 {
+  background-color: rgba(214, 51, 132, 0.18) !important;
+  color: #F5ADC9 !important;
+}
+
+body.theme-samenai .text-purple-700 {
+  color: #f7b6d6 !important;
+}
+
+body.theme-samenai .border-purple-300 {
+  border-color: rgba(214, 51, 132, 0.35) !important;
+}
+
+body.theme-samenai .bg-yellow-50 {
+  background-color: rgba(214, 51, 132, 0.12) !important;
+}
+
+body.theme-samenai .border-yellow-200 {
+  border-color: rgba(214, 51, 132, 0.35) !important;
+}
+
+body.theme-samenai .text-yellow-900,
+body.theme-samenai .text-yellow-800,
+body.theme-samenai .text-yellow-600 {
+  color: #F7B6D5 !important;
+}
+
+body.theme-samenai .bg-gradient-to-r.from-skillval-warm.to-skillval-bright {
+  background-image: linear-gradient(135deg, #d63384, #2da3b5) !important;
+  color: #ffffff;
+}
+
+body.theme-samenai .bg-gradient-to-r.from-skillval-bright.to-skillval-warm {
+  background-image: linear-gradient(135deg, #2da3b5, #d63384) !important;
+  color: #ffffff;
+}
+
+body.theme-samenai .from-skillval-warm {
+  --tw-gradient-from: #d63384 !important;
+  --tw-gradient-to: rgba(214, 51, 132, 0) !important;
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
+}
+
+body.theme-samenai .from-skillval-bright {
+  --tw-gradient-from: #2da3b5 !important;
+  --tw-gradient-to: rgba(45, 163, 181, 0) !important;
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
+}
+
+body.theme-samenai .to-skillval-bright {
+  --tw-gradient-to: #2da3b5 !important;
+}
+
+body.theme-samenai .to-skillval-warm {
+  --tw-gradient-to: #d63384 !important;
+}
+
+body.theme-samenai .via-skillval-bright {
+  --tw-gradient-stops: var(--tw-gradient-from), #2da3b5, var(--tw-gradient-to) !important;
+}
+
+body.theme-samenai .bg-white,
+body.theme-samenai .bg-gray-50,
+body.theme-samenai .bg-skillval-cream,
+body.theme-samenai .bg-white\/70,
+body.theme-samenai .bg-white\/80,
+body.theme-samenai .bg-white\/90,
+body.theme-samenai .bg-white\/95 {
+  background-color: rgba(23, 78, 94, 0.6) !important;
+  color: #ffffff !important;
+}
+
+body.theme-samenai .text-gray-900,
+body.theme-samenai .text-gray-800,
+body.theme-samenai .text-slate-800,
+body.theme-samenai .text-skillval-night {
+  color: #ffffff !important;
+}
+
+body.theme-samenai .text-gray-700,
+body.theme-samenai .text-gray-600,
+body.theme-samenai .text-slate-600,
+body.theme-samenai .text-slate-500,
+body.theme-samenai .text-gray-500 {
+  color: #a3b1b6 !important;
+}

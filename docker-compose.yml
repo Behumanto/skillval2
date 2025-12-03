@@ -1,0 +1,59 @@
+version: "3.9"
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    volumes:
+      - ./backend:/app
+      - ./.env.example:/app/.env:ro
+    environment:
+      - APP_ENV=local
+      - MONGO_URI=mongodb://mongo:27017/skillval
+      - MONGO_DB_NAME=skillval
+      - LLM_PROVIDER=${LLM_PROVIDER:-mock}
+      - STT_PROVIDER=${STT_PROVIDER:-mock}
+      - FRAUD_PROVIDER=${FRAUD_PROVIDER:-mock}
+      - JWT_SECRET=${JWT_SECRET:-super-secret-key}
+    depends_on:
+      - mongo
+    ports:
+      - "8000:8000"
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    command: npm run dev
+    volumes:
+      - ./frontend:/app
+    environment:
+      - NEXT_PUBLIC_BACKEND_URL=http://localhost:8000
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+  mongo:
+    image: mongo:7.0
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+  minio:
+    image: minio/minio:RELEASE.2024-05-01T01-11-10Z
+    command: server /data --console-address ":9001"
+    environment:
+      - MINIO_ROOT_USER=skillval
+      - MINIO_ROOT_PASSWORD=skillval123
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - minio-data:/data
+
+volumes:
+  mongo-data:
+  minio-data:
